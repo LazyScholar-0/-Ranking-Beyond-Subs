@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user profile",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "number", "description": "Server timestamp" }
+      },
+      "required": ["displayName", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A user's review and rating for an entity",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "entityId": { "type": "string", "description": "Normalized ID of the target" },
+        "entityTitle": { "type": "string" },
+        "rating": { "type": "number", "description": "1 to 10" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "number", "description": "Server timestamp" }
+      },
+      "required": ["userId", "userName", "entityId", "entityTitle", "rating", "comment", "createdAt"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "User submitted video/channel ideas",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "type": { "type": "string", "enum": ["idea", "video", "channel"] },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["userId", "title", "url", "type", "status", "createdAt", "updatedAt"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Aggregated stats for an entity to display on leaderboards",
+      "type": "object",
+      "properties": {
+        "entityId": { "type": "string" },
+        "title": { "type": "string" },
+        "subscriberCount": { "type": "number" },
+        "positiveRatings": { "type": "number" },
+        "fairScore": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["entityId", "title", "subscriberCount", "positiveRatings", "fairScore", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Store user profiles."
+    },
+    "reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Store all reviews across the app."
+    },
+    "submissions/{submissionId}": {
+      "schema": { "$ref": "#/entities/Submission" },
+      "description": "Store user submissions."
+    },
+    "leaderboard/{entityId}": {
+      "schema": { "$ref": "#/entities/LeaderboardEntry" },
+      "description": "Entity aggregation for displaying top channels/videos."
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Ranking Beyond Subs",
+  "description": "IMDb for YouTube: rates videos and creators based on off-platform online sentiment and user reviews, ignoring inflated YouTube likes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
